@@ -7,7 +7,7 @@ module CancerRegistryReportingTestKit
     class OdhUsualWorkValidationTest < Inferno::Test
       include CancerRegistryReportingTestKit::ValidationTest
 
-      id :ccrr_v100_odh_usual_work_validation_test
+      id :ccrr_v200_odh_usual_work_validation_test
       title 'Usual Work profile conformance'
       description %(
         This test verifies that Observation instances
@@ -27,7 +27,7 @@ module CancerRegistryReportingTestKit
       run do
         perform_validation_test(scratch_resources[:all] || [],
                                 'http://hl7.org/fhir/us/odh/StructureDefinition/odh-UsualWork',
-                                '1.1.0',
+                                '1.3.0',
                                 skip_if_empty: true)
       end
     end

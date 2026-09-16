@@ -7,7 +7,7 @@ module CancerRegistryReportingTestKit
     class ServiceRequestValidationTest < Inferno::Test
       include CancerRegistryReportingTestKit::ValidationTest
 
-      id :ccrr_v100_service_request_validation_test
+      id :ccrr_v200_service_request_validation_test
       title 'Base ServiceRequest profile conformance'
       description %(
         This test verifies that ServiceRequest instances
@@ -26,8 +26,8 @@ module CancerRegistryReportingTestKit
 
       run do
         perform_validation_test(scratch_resources[:all] || [],
-                                'http://hl7.org/fhir/StructureDefinition/ServiceRequest',
-                                '4.0.1',
+                                'http://hl7.org/fhir/us/core/StructureDefinition/us-core-servicerequest',
+                                '6.1.0',
                                 skip_if_empty: true)
       end
     end

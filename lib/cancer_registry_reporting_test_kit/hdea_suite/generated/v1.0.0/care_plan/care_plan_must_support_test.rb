@@ -11,7 +11,7 @@ module CancerRegistryReportingTestKit
       title 'US Core CarePlan profile must support element coverage'
       description %(
         This test looks across all instances
-        associated with the [US Core CarePlan profile](http://hl7.org/fhir/us/core/StructureDefinition/us-core-careplan|5.0.1)
+        associated with the [US Core CarePlan profile](http://hl7.org/fhir/us/core/StructureDefinition/us-core-careplan|6.1.0)
         found in the provided report Bundles and verifies that they
         contain populated examples of the following must support elements
         defined in the profile:
@@ -26,7 +26,7 @@ module CancerRegistryReportingTestKit
         * CarePlan.text.status
       )
 
-      id :ccrr_v100_care_plan_must_support_test
+      id :ccrr_v200_care_plan_must_support_test
 
       def resource_type
         'CarePlan'

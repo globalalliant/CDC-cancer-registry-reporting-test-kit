@@ -11,7 +11,7 @@ module CancerRegistryReportingTestKit
       title 'US Core Medication profile must support element coverage'
       description %(
         This test looks across all instances
-        associated with the [US Core Medication profile](http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication|5.0.1)
+        associated with the [US Core Medication profile](http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication|6.1.0)
         found in the provided report Bundles and verifies that they
         contain populated examples of the following must support elements
         defined in the profile:
@@ -19,7 +19,7 @@ module CancerRegistryReportingTestKit
         * Medication.code
       )
 
-      id :ccrr_v100_medication_must_support_test
+      id :ccrr_v200_medication_must_support_test
 
       def resource_type
         'Medication'

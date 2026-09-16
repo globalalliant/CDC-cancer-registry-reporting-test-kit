@@ -4,70 +4,71 @@
 :version: v1.0.0
 :reformatted_version: v100
 :resource: Encounter
-:profile_url: http://hl7.org/fhir/us/core/StructureDefinition/us-core-encounter
-:profile_name: US Core Encounter Profile
-:profile_version: 5.0.1
-:title: Encounter US Core
-:short_description: Verify support for the server capabilities required by the US
-  Core Encounter Profile.
+:profile_url: http://hl7.org/fhir/us/core/StructureDefinition/us-core-encounter|6.1.0
+:profile_name: US Core Encounter
+:profile_version: 6.1.0
+:title: US Core Encounter
+:short_description: Verify support for the server capabilities required by the US Core Encounter.
 :must_supports:
   :extensions: []
-  :slices: []
+  :slices:
+  - :slice_id: Encounter.participant:sliceResponsibleProvider
+    :slice_name: sliceResponsibleProvider
+    :path: participant
+    :discriminator:
+      :type: value
+      :values:
+        - :path: type.coding.system
+          :value: http://terminology.hl7.org/CodeSystem/v3-ParticipationType
+        - :path: type.coding.code
+          :value: ATND
   :elements:
-  - :path: identifier
-  - :path: identifier.system
-  - :path: identifier.value
-  - :path: status
-  - :path: class
-  - :path: type
-  - :path: subject
-    :types:
-    - Reference
-    :target_profiles:
-    - http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient
-  - :path: participant
-  - :path: participant.type
-  - :path: participant.period
-  - :path: participant.individual
-    :types:
-    - Reference
-    :target_profiles:
-    - http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner
-  - :path: period
-  - :path: reasonCode
-  - :path: reasonReference
-    :types:
-    - Reference
-    :target_profiles:
-    - http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition-problems-health-concerns
-    - http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition-encounter-diagnosis
-  - :path: hospitalization
-  - :path: hospitalization.dischargeDisposition
-  - :path: location
-  - :path: location.location
-    :types:
-    - Reference
-  - :path: serviceProvider
-    :types:
-    - Reference
-    :target_profiles:
-    - http://hl7.org/fhir/us/core/StructureDefinition/us-core-organization
+    - :path: identifier
+    - :path: identifier.system
+    - :path: identifier.value
+    - :path: status
+    - :path: class
+    - :path: type
+    - :path: subject
+    - :path: participant
+    - :path: participant.type
+    - :path: participant.period
+    - :path: participant.individual
+      :types:
+        - Reference
+      :target_profiles:
+        - http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner|6.1.0
+    - :path: period
+    - :path: reasonCode
+    - :path: reasonReference
+      :types:
+        - Reference
+      :target_profiles:
+        - http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition-encounter-diagnosis|6.1.0
+        - http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition-problems-health-concerns|6.1.0
+    - :path: hospitalization
+    - :path: hospitalization.dischargeDisposition
+    - :path: location
+    - :path: location.location
+    - :path: serviceProvider
+    
 :mandatory_elements:
-- Encounter.identifier.system
-- Encounter.identifier.value
-- Encounter.status
-- Encounter.statusHistory.status
-- Encounter.statusHistory.period
-- Encounter.class
-- Encounter.classHistory.class
-- Encounter.classHistory.period
-- Encounter.type
-- Encounter.subject
-- Encounter.diagnosis.condition
-- Encounter.location.location
+  - Encounter.identifier.system
+  - Encounter.identifier.value
+  - Encounter.status
+  - Encounter.statusHistory.status
+  - Encounter.statusHistory.period
+  - Encounter.class
+  - Encounter.classHistory.class
+  - Encounter.classHistory.period
+  - Encounter.type
+  - Encounter.subject
+  - Encounter.diagnosis.condition
+  - Encounter.location.location
+
 :tests:
-- :id: ccrr_v100_encounter_must_support_test
-  :file_name: encounter_must_support_test.rb
-- :id: ccrr_v100_encounter_validation_test
-  :file_name: encounter_validation_test.rb
-:id: ccrr_v100_encounter
+  - :id: ccrr_v200_encounter_must_support_test
+    :file_name: encounter_must_support_test.rb
+  - :id: ccrr_v200_encounter_validation_test
+    :file_name: encounter_validation_test.rb
+:id: ccrr_v200_encounter

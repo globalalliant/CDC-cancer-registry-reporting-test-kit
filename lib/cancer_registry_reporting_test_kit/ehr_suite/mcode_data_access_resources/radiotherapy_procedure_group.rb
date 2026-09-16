@@ -10,7 +10,7 @@ module CancerRegistryReportingTestKit
       The mCODE Radiotherapy Course Summary group verifies that the system under test is
       able to provide correct responses for Radiotherapy Procedure queries. These queries
       must return resources conforming to the [mCODE Radiotherapy Course Summary Profile](https://hl7.org/fhir/us/mcode/STU3/StructureDefinition-mcode-radiotherapy-course-summary.html)
-      as specified in the mCODE v3.0.0 Implementation Guide.
+      as specified in the mCODE v4.0.0 Implementation Guide.
 
       # Testing Methodology
       ## Searching
@@ -21,7 +21,7 @@ module CancerRegistryReportingTestKit
       * patient + code
 
       Note that US Core requires support for the patient search parameter
-      for the [Procedure resource](https://www.hl7.org/fhir/us/core/STU3.1.1/StructureDefinition-us-core-procedure.html#quick-start).
+      for the [Procedure resource](https://hl7.org/fhir/us/core/STU6.1/StructureDefinition-us-core-procedure.html#quick-start).
       Since mCODE requires support for the code parameter for [Radiotherapy treatment searches](https://hl7.org/fhir/us/mcode/STU3/conformance-general.html#support-querying-mcode-conforming-resources),
       the patient + code combination is required by these tests.
 

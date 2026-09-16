@@ -26,14 +26,15 @@ module CancerRegistryReportingTestKit
         * PractitionerRole.telecom.value
       )
 
-      id :ccrr_v100_practitioner_role_must_support_test
+      id :ccrr_v200_practitioner_role_must_support_test
 
       def resource_type
         'PractitionerRole'
       end
 
       def self.metadata
-        @metadata ||= HdeaGenerator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'metadata.yml'), aliases: true))
+        @metadata ||= HdeaGenerator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'practitioner_role_metadata.yml'),
+                                                                      aliases: true))
       end
 
       def scratch_resources

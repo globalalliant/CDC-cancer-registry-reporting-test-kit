@@ -8,10 +8,10 @@ module CancerRegistryReportingTestKit
     class PatientMustSupportTest < Inferno::Test
       include CancerRegistryReportingTestKit::MustSupportTest
 
-      title 'US Core Patient profile must support element coverage'
+      title 'CCRR Patient Profile must support element coverage'
       description %(
         This test looks across all instances
-        associated with the [US Core Patient profile](http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient|5.0.1)
+        associated with the [US Core Patient Profile v6.1.0](http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient)
         found in the provided report Bundles and verifies that they
         contain populated examples of the following must support elements
         defined in the profile:
@@ -19,7 +19,6 @@ module CancerRegistryReportingTestKit
         * Patient.address
         * Patient.address.city
         * Patient.address.line
-        * Patient.address.period
         * Patient.address.postalCode
         * Patient.address.state
         * Patient.birthDate
@@ -36,7 +35,7 @@ module CancerRegistryReportingTestKit
         * Patient.telecom.value
       )
 
-      id :ccrr_v100_patient_must_support_test
+      id :ccrr_v200_patient_must_support_test
 
       def resource_type
         'Patient'

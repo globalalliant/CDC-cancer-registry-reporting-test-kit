@@ -11,7 +11,7 @@ module CancerRegistryReportingTestKit
       title 'US Core Smoking Status Observation profile must support element coverage'
       description %(
         This test looks across all instances
-        associated with the [US Core Smoking Status Observation profile](http://hl7.org/fhir/us/core/StructureDefinition/us-core-smokingstatus|5.0.1)
+        associated with the [US Core Smoking Status Observation profile](http://hl7.org/fhir/us/core/StructureDefinition/us-core-smokingstatus|6.1.0)
         found in the provided report Bundles and verifies that they
         contain populated examples of the following must support elements
         defined in the profile:
@@ -25,7 +25,7 @@ module CancerRegistryReportingTestKit
         * Observation.value[x]:valueCodeableConcept
       )
 
-      id :ccrr_v100_smokingstatus_must_support_test
+      id :ccrr_v200_smokingstatus_must_support_test
 
       def resource_type
         'Observation'

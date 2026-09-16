@@ -1,81 +1,99 @@
 ---
 :name: odh_UsualWork
 :class_name: OdhUsualworkSequence
-:version: v1.0.0
-:reformatted_version: v100
+:version: v2.0.0-ballot
+:reformatted_version: v200
 :resource: Observation
 :profile_url: http://hl7.org/fhir/us/odh/StructureDefinition/odh-UsualWork
 :profile_name: Usual Work
-:profile_version: 1.1.0
+:profile_version: 1.3.0
 :title: Observation Usual Work
-:short_description: Verify support for the server capabilities required by the Usual
-  Work.
+:short_description: Verify support for the server capabilities required by the Usual Work.
 :must_supports:
   :extensions: []
   :slices:
-  - :slice_id: Observation.value[x]:valueCodeableConcept.coding:occupationCDCCensus2010
-    :slice_name: occupationCDCCensus2010
-    :path: value[x].coding
-    :discriminator:
-      :type: requiredBinding
-      :path: ''
-      :values:
-      - :system: 2.16.840.1.114222.4.11.7186
-        :code: ''
-  - :slice_id: Observation.value[x]:valueCodeableConcept.coding:occupationONETSOCDetailODH
-    :slice_name: occupationONETSOCDetailODH
-    :path: value[x].coding
-    :discriminator:
-      :type: requiredBinding
-      :path: ''
-      :values: 
-      - :system: 2.16.840.1.114222.4.11.7901
-        :code: ''
-  - :slice_id: Observation.component:odh-UsualIndustry.value[x].coding:industryCDCCensus2010
-    :slice_name: industryCDCCensus2010
-    :path: component.value[x].coding
-    :discriminator:
-      :type: requiredBinding
-      :path: component.value[x]
-      :values: 
-      - :system: 2.16.840.1.114222.4.11.7187
-        :code: ''
-  - :slice_id: Observation.component:odh-UsualIndustry.value[x].coding:industryONETSOCDetailODH
-    :slice_name: industryONETSOCDetailODH
-    :path: component.value[x].coding
-    :discriminator:
-      :type: requiredBinding
-      :path: ''
-      :values: 
-      - :system: 2.16.840.1.114222.4.11.7900
-        :code: ''
-  - :slice_id: Observation.value[x]:valueCodeableConcept
-    :slice_name: valueCodeableConcept
-    :path: value[x]
-    :discriminator:
-      :type: type
-      :code: CodeableConcept
+    - :slice_id: Observation.value[x]:valueCodeableConcept.coding:occupationCDCCensus2010
+      :slice_name: occupationCDCCensus2010
+      :path: value[x].coding
+      :discriminator:
+        :type: requiredBinding
+        :path: ''
+        :values:
+          - :system: urn:oid:2.16.840.1.114222.4.11.7186
+            :code: ''
+    - :slice_id: Observation.value[x]:valueCodeableConcept.coding:occupationONETSOCDetailODH
+      :slice_name: occupationONETSOCDetailODH
+      :path: value[x].coding
+      :discriminator:
+        :type: requiredBinding
+        :path: ''
+        :values:
+          - :system: urn:oid:2.16.840.1.114222.4.11.7901
+            :code: ''
+    - :slice_id: Observation.component:odh-UsualIndustry.value[x].coding:industryCDCCensus2010
+      :slice_name: industryCDCCensus2010
+      :path: component.value[x].coding
+      :discriminator:
+        :type: requiredBinding
+        :path: component.value[x]
+        :values:
+          - :system: urn:oid:2.16.840.1.114222.4.11.7187
+            :code: ''
+    - :slice_id: Observation.component:odh-UsualIndustry.value[x].coding:industryONETSOCDetailODH
+      :slice_name: industryONETSOCDetailODH
+      :path: component.value[x].coding
+      :discriminator:
+        :type: requiredBinding
+        :path: ''
+        :values:
+          - :system: urn:oid:2.16.840.1.114222.4.11.7900
+            :code: ''
+    - :slice_id: Observation.value[x]:valueCodeableConcept
+      :slice_name: valueCodeableConcept
+      :path: value[x]
+      :discriminator:
+        :type: type
+        :code: CodeableConcept
   :elements:
-  - :path: component:odh-UsualIndustry.value[x].coding
-  - :path: value[x]:valueCodeableConcept.coding
+    - :path: component:odh-UsualIndustry.value[x].coding
+    - :path: value[x]:valueCodeableConcept.coding
 :mandatory_elements:
-- Observation.status
-- Observation.category.coding
-- Observation.category.coding.system
-- Observation.category.coding.code
-- Observation.code
-- Observation.code.coding
-- Observation.code.coding.system
-- Observation.code.coding.code
-- Observation.subject
-- Observation.effective[x]
-- Observation.value[x].coding
-- Observation.component
-- Observation.component.code
-- Observation.component.value[x].coding
+  - Observation.status
+  - Observation.category.coding
+  - Observation.category.coding.system
+  - Observation.category.coding.code
+  - Observation.category.coding:Fixed_social-history
+  - Observation.category.coding:Fixed_social-history.coding
+  - Observation.category.coding:Fixed_social-history.coding.system
+  - Observation.category.coding:Fixed_social-history.coding.code
+  - Observation.code
+  - Observation.code.coding
+  - Observation.code.coding.system
+  - Observation.code.coding.code
+  - Observation.code.coding:Fixed_21843-8
+  - Observation.code.coding:Fixed_21843-8.coding
+  - Observation.code.coding:Fixed_21843-8.coding.system
+  - Observation.code.coding:Fixed_21843-8.coding.code
+  - Observation.code.text
+  - Observation.subject
+  - Observation.effective[x]
+  - Observation.effectivePeriod
+  - Observation.value[x].coding
+  - Observation.component
+  - Observation.component.code
+  - Observation.component.value[x].coding
+  - Observation.component:odh-UsualIndustry
+  - Observation.component:odh-UsualIndustry.code
+  - Observation.component:odh-UsualIndustry.code.coding
+  - Observation.component:odh-UsualIndustry.code.coding.system
+  - Observation.component:odh-UsualIndustry.code.coding.code
+  - Observation.component:odh-UsualOccupationDuration.code
+  - Observation.component:odh-UsualOccupationDuration.code.coding
+  - Observation.component:odh-UsualOccupationDuration.code.coding.system
+  - Observation.component:odh-UsualOccupationDuration.code.coding.code
 :tests:
-- :id: ccrr_v100_odh_usual_work_must_support_test
-  :file_name: odh_usual_work_must_support_test.rb
-- :id: ccrr_v100_odh_usual_work_validation_test
-  :file_name: odh_usual_work_validation_test.rb
-:id: ccrr_v100_odh_usual_work
+  - :id: ccrr_v200_odh_usual_work_must_support_test
+    :file_name: odh_usual_work_must_support_test.rb
+  - :id: ccrr_v200_odh_usual_work_validation_test
+    :file_name: odh_usual_work_validation_test.rb
+:id: ccrr_v200_odh_usual_work

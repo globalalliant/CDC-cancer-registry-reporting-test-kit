@@ -11,7 +11,7 @@ module CancerRegistryReportingTestKit
       title 'US Core Procedure profile must support element coverage'
       description %(
         This test looks across all instances
-        associated with the [US Core Procedure profile](http://hl7.org/fhir/us/core/StructureDefinition/us-core-procedure|5.0.1)
+        associated with the [US Core Procedure profile](http://hl7.org/fhir/us/core/StructureDefinition/us-core-procedure|6.1.0)
         found in the provided report Bundles and verifies that they
         contain populated examples of the following must support elements
         defined in the profile:
@@ -22,7 +22,7 @@ module CancerRegistryReportingTestKit
         * Procedure.subject
       )
 
-      id :ccrr_v100_procedure_must_support_test
+      id :ccrr_v200_procedure_must_support_test
 
       def resource_type
         'Procedure'

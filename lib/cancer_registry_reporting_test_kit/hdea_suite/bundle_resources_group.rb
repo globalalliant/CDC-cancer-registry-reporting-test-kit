@@ -10,8 +10,10 @@ require_relative 'generated/v1.0.0/allergy_intolerance/allergy_intolerance_valid
 require_relative 'generated/v1.0.0/care_plan/care_plan_validation_test'
 require_relative 'generated/v1.0.0/central_cancer_registry_primary_cancer_condition/central_cancer_registry_primary_cancer_condition_validation_test'
 require_relative 'generated/v1.0.0/condition/condition_validation_test'
+require_relative 'generated/v1.0.0/condition_encounter_diagnosis/condition_encounter_diagnosis_validation_test'
 require_relative 'generated/v1.0.0/diagnostic_report_lab/diagnostic_report_lab_validation_test'
 require_relative 'generated/v1.0.0/diagnostic_report_note/diagnostic_report_note_validation_test'
+require_relative 'generated/v1.0.0/us_pathology_diagnostic_report/us_pathology_diagnostic_report_validation_test'
 require_relative 'generated/v1.0.0/document_reference/document_reference_validation_test'
 require_relative 'generated/v1.0.0/encounter/encounter_validation_test'
 require_relative 'generated/v1.0.0/mcode_radiotherapy_course_summary/mcode_radiotherapy_course_summary_validation_test'
@@ -36,8 +38,10 @@ require_relative 'generated/v1.0.0/allergy_intolerance/allergy_intolerance_must_
 require_relative 'generated/v1.0.0/care_plan/care_plan_must_support_test'
 require_relative 'generated/v1.0.0/central_cancer_registry_primary_cancer_condition/central_cancer_registry_primary_cancer_condition_must_support_test' # rubocop:disable Layout/LineLength
 require_relative 'generated/v1.0.0/condition/condition_must_support_test'
+require_relative 'generated/v1.0.0/condition_encounter_diagnosis/condition_encounter_diagnosis_must_support_test'
 require_relative 'generated/v1.0.0/diagnostic_report_lab/diagnostic_report_lab_must_support_test'
 require_relative 'generated/v1.0.0/diagnostic_report_note/diagnostic_report_note_must_support_test'
+require_relative 'generated/v1.0.0/us_pathology_diagnostic_report/us_pathology_diagnostic_report_must_support_test'
 require_relative 'generated/v1.0.0/document_reference/document_reference_must_support_test'
 require_relative 'generated/v1.0.0/encounter/encounter_must_support_test'
 require_relative 'generated/v1.0.0/mcode_radiotherapy_course_summary/mcode_radiotherapy_course_summary_must_support_test'
@@ -86,67 +90,75 @@ module CancerRegistryReportingTestKit
     )
 
     verifies_requirements 'hl7.fhir.us.central-cancer-registry-reporting_1.0.0@68',
-                          'hl7.fhir.us.central-cancer-registry-reporting_1.0.0@102'
+                          'hl7.fhir.us.central-cancer-registry-reporting_1.0.0@102',
+                          'hl7.fhir.us.central-cancer-registry-reporting_2.0.0@68',
+                          'hl7.fhir.us.central-cancer-registry-reporting_2.0.0@102'
 
     id :ccrr_report_resources
     run_as_group
 
     group do
       title 'Report'
-      test from: :ccrr_v100_ccrr_content_bundle_parse_and_validation_test
-      test from: :ccrr_v100_ccrr_content_bundle_must_support_test
-      test from: :ccrr_v100_composition_validation_test
-      test from: :ccrr_v100_composition_must_support_test
+      test from: :ccrr_v200_ccrr_content_bundle_parse_and_validation_test
+      test from: :ccrr_v200_ccrr_content_bundle_must_support_test
+      test from: :ccrr_v200_composition_validation_test
+      test from: :ccrr_v200_composition_must_support_test
     end
 
     group do
       title 'Referenced Patient'
-      test from: :ccrr_v100_patient_validation_test
-      test from: :ccrr_v100_patient_must_support_test
+      test from: :ccrr_v200_patient_validation_test
+      test from: :ccrr_v200_patient_must_support_test
     end
 
     group do
       title 'Referenced Encounter'
-      test from: :ccrr_v100_encounter_validation_test
-      test from: :ccrr_v100_encounter_must_support_test
+      test from: :ccrr_v200_encounter_validation_test
+      test from: :ccrr_v200_encounter_must_support_test
     end
 
     group do
       title 'Referenced Author'
       test from: :ccrr_v100_author_validation_test
       test from: :ccrr_v100_organization_must_support_test
-      test from: :ccrr_v100_practitioner_must_support_test
-      test from: :ccrr_v100_practitioner_role_must_support_test
+      test from: :ccrr_v200_practitioner_must_support_test
+      test from: :ccrr_v200_practitioner_role_must_support_test
     end
 
     group do
       title 'Primary Cancer Condition Section'
-      test from: :ccrr_v100_central_cancer_registry_primary_cancer_condition_validation_test
-      test from: :ccrr_v100_central_cancer_registry_primary_cancer_condition_must_support_test
+      test from: :ccrr_v200_central_cancer_registry_primary_cancer_condition_validation_test
+      test from: :ccrr_v200_central_cancer_registry_primary_cancer_condition_must_support_test
     end
 
     group do
       title 'Secondary Cancer Condition Section'
-      test from: :ccrr_v100_mcode_secondary_cancer_condition_validation_test
-      test from: :ccrr_v100_mcode_secondary_cancer_condition_must_support_test
+      test from: :ccrr_v200_mcode_secondary_cancer_condition_validation_test
+      test from: :ccrr_v200_mcode_secondary_cancer_condition_must_support_test
     end
 
     group do
       title 'Cancer Stage Group Section'
-      test from: :ccrr_v100_mcode_tnm_stage_group_validation_test
-      test from: :ccrr_v100_mcode_tnm_stage_group_must_support_test
+      test from: :ccrr_v200_mcode_tnm_stage_group_validation_test
+      test from: :ccrr_v200_mcode_tnm_stage_group_must_support_test
     end
 
     group do
       title 'Radiotherapy Course Summary Section'
-      test from: :ccrr_v100_mcode_radiotherapy_course_summary_validation_test
-      test from: :ccrr_v100_mcode_radiotherapy_course_summary_must_support_test
+      test from: :ccrr_v200_mcode_radiotherapy_course_summary_validation_test
+      test from: :ccrr_v200_mcode_radiotherapy_course_summary_must_support_test
     end
 
     group do
       title 'Problems Section'
-      test from: :ccrr_v100_condition_validation_test
-      test from: :ccrr_v100_condition_must_support_test
+      test from: :ccrr_v200_condition_validation_test
+      test from: :ccrr_v200_condition_must_support_test
+    end
+
+    group do
+      title 'Encounter Diagnosis Section'
+      test from: :ccrr_v200_condition_encounter_diagnosis_validation_test
+      test from: :ccrr_v200_condition_encounter_diagnosis_must_support_test
     end
 
     group do
@@ -157,57 +169,59 @@ module CancerRegistryReportingTestKit
 
     group do
       title 'Medications Administered and Medications Sections'
-      test from: :ccrr_v100_medication_administration_validation_test
-      test from: :ccrr_v100_medication_administration_must_support_test
-      test from: :ccrr_v100_medication_statement_validation_test
-      test from: :ccrr_v100_medication_statement_must_support_test
-      test from: :ccrr_v100_medication_validation_test
-      test from: :ccrr_v100_medication_must_support_test
+      test from: :ccrr_v200_medication_administration_validation_test
+      test from: :ccrr_v200_medication_administration_must_support_test
+      test from: :ccrr_v200_medication_statement_validation_test
+      test from: :ccrr_v200_medication_statement_must_support_test
+      test from: :ccrr_v200_medication_validation_test
+      test from: :ccrr_v200_medication_must_support_test
     end
 
     group do
       title 'Occupational Data Section'
-      test from: :ccrr_v100_odh_usual_work_validation_test
-      test from: :ccrr_v100_odh_usual_work_must_support_test
+      test from: :ccrr_v200_odh_usual_work_validation_test
+      test from: :ccrr_v200_odh_usual_work_must_support_test
     end
 
     group do
       title 'Results Section'
-      test from: :ccrr_v100_observation_lab_validation_test
-      test from: :ccrr_v100_observation_lab_must_support_test
-      test from: :ccrr_v100_diagnostic_report_lab_validation_test
-      test from: :ccrr_v100_diagnostic_report_lab_must_support_test
+      test from: :ccrr_v200_observation_lab_validation_test
+      test from: :ccrr_v200_observation_lab_must_support_test
+      test from: :ccrr_v200_diagnostic_report_lab_validation_test
+      test from: :ccrr_v200_diagnostic_report_lab_must_support_test
+      test from: :ccrr_v200_us_pathology_diagnostic_report_validation_test
+      test from: :ccrr_v200_us_pathology_diagnostic_report_must_support_test
     end
 
     group do
       title 'Notes Section'
       test from: :ccrr_v100_document_reference_validation_test
       test from: :ccrr_v100_document_reference_must_support_test
-      test from: :ccrr_v100_diagnostic_report_note_validation_test
-      test from: :ccrr_v100_diagnostic_report_note_must_support_test
+      test from: :ccrr_v200_diagnostic_report_note_validation_test
+      test from: :ccrr_v200_diagnostic_report_note_must_support_test
     end
 
     group do
       title 'Plan of Treatment Section'
-      test from: :ccrr_v100_medication_request_validation_test
-      test from: :ccrr_v100_medication_request_must_support_test
-      test from: :ccrr_v100_service_request_validation_test
-      test from: :ccrr_v100_service_request_must_support_test
-      test from: :ccrr_v100_care_plan_validation_test
-      test from: :ccrr_v100_care_plan_must_support_test
-      test from: :ccrr_v100_procedure_validation_test
-      test from: :ccrr_v100_procedure_must_support_test
+      test from: :ccrr_v200_medication_request_validation_test
+      test from: :ccrr_v200_medication_request_must_support_test
+      test from: :ccrr_v200_service_request_validation_test
+      test from: :ccrr_v200_service_request_must_support_test
+      test from: :ccrr_v200_care_plan_validation_test
+      test from: :ccrr_v200_care_plan_must_support_test
+      test from: :ccrr_v200_procedure_validation_test
+      test from: :ccrr_v200_procedure_must_support_test
     end
 
     group do
       title 'Vital Signs Section'
-      test from: :ccrr_v100_observation_validation_test
-      test from: :ccrr_v100_observation_must_support_test
+      test from: :ccrr_v200_observation_validation_test
+      test from: :ccrr_v200_observation_must_support_test
     end
     group do
       title 'Social History Section'
-      test from: :ccrr_v100_smokingstatus_validation_test
-      test from: :ccrr_v100_smokingstatus_must_support_test
+      test from: :ccrr_v200_smokingstatus_validation_test
+      test from: :ccrr_v200_smokingstatus_must_support_test
     end
   end
 end

@@ -12,15 +12,29 @@ module CancerRegistryReportingTestKit
     def_delegators 'self.class', :metadata
 
     def all_scratch_resources
-      scratch_resources[:all]
+      base_resources = Array.wrap(scratch_resources[:all])
+
+      if respond_to?(:scratch) && scratch.is_a?(Hash) && scratch.key?(:ccrr_content_bundle_resources)
+        grouped_resources =
+          scratch.values.select { |group| group.is_a?(Hash) }.map { |group| Array.wrap(group[:all]) }.flatten
+
+        (base_resources + grouped_resources).uniq
+      else
+        base_resources
+      end
     end
 
     def perform_must_support_test(resources)
-      skip_if resources.blank?, "No #{resource_type} resources were found"
+      typed_resources =
+        Array.wrap(resources).select do |resource|
+          resource.respond_to?(:resourceType) && resource.resourceType == resource_type
+        end
 
-      missing_elements(resources)
-      missing_slices(resources)
-      missing_extensions(resources)
+      skip_if typed_resources.blank?, "No #{resource_type} resources were found"
+
+      missing_elements(typed_resources)
+      missing_slices(typed_resources)
+      missing_extensions(typed_resources)
 
       handle_must_support_choices if metadata.must_supports[:choices].present?
 
@@ -78,11 +92,7 @@ module CancerRegistryReportingTestKit
     end
 
     def must_support_extensions
-      if exclude_uscdi_only_test?
-        metadata.must_supports[:extensions].reject { |extension| extension[:uscdi_only] }
-      else
-        metadata.must_supports[:extensions]
-      end
+      Array(metadata.must_supports&.dig(:extensions))
     end
 
     def missing_extensions(resources = [])
@@ -105,10 +115,12 @@ module CancerRegistryReportingTestKit
     end
 
     def must_support_elements
+      elements = Array(metadata.must_supports&.dig(:elements))
+
       if exclude_uscdi_only_test?
-        metadata.must_supports[:elements].reject { |element| element[:uscdi_only] }
+        elements.reject { |element| element[:uscdi_only] }
       else
-        metadata.must_supports[:elements]
+        elements
       end
     end
 
@@ -146,10 +158,12 @@ module CancerRegistryReportingTestKit
     end
 
     def must_support_slices
+      slices = Array(metadata.must_supports&.dig(:slices))
+
       if exclude_uscdi_only_test?
-        metadata.must_supports[:slices].reject { |slice| slice[:uscdi_only] }
+        slices.reject { |slice| slice[:uscdi_only] }
       else
-        metadata.must_supports[:slices]
+        slices
       end
     end
 
@@ -179,7 +193,10 @@ module CancerRegistryReportingTestKit
         when 'patternIdentifier'
           find_a_value_at(element, discriminator[:path]) { |identifier| identifier.system == discriminator[:system] }
         when 'value'
-          values = discriminator[:values].map { |value| value.merge(path: value[:path].split('.')) }
+          values_array = Array(discriminator[:values])
+          next false if values_array.blank?
+
+          values = values_array.map { |value| value.merge(path: value[:path].split('.')) }
           find_slice_by_values(element, values)
         when 'type'
           case discriminator[:code]
@@ -198,10 +215,13 @@ module CancerRegistryReportingTestKit
           when 'String'
             element.is_a? String
           else
-            if element.is_a? FHIR::Bundle::Entry
-              element.resource.is_a? FHIR.const_get(discriminator[:code])
+            klass = safe_const_get(FHIR, discriminator[:code])
+            next false if klass.nil?
+
+            if element.is_a?(FHIR::Bundle::Entry)
+              element.resource.is_a?(klass)
             else
-              element.is_a? FHIR.const_get(discriminator[:code])
+              element.is_a?(klass)
             end
           end
         when 'requiredBinding'
@@ -213,9 +233,20 @@ module CancerRegistryReportingTestKit
             get_slice_by_codesystem(element, discriminator)
           else
             find_a_value_at(element, coding_path) do |coding|
-              discriminator[:values].any? { |value| value[:system] == coding.system && value[:code] == coding.code }
+              Array(discriminator[:values]).any? { |value| value[:system] == coding.system && value[:code] == coding.code }
             end
           end
+        when 'profile'
+          ref = element.respond_to?(:reference) ? element.reference.to_s : nil
+          next false if ref.blank?
+
+          resolved = resolve_reference_from_scratch(ref)
+          next false if resolved.nil?
+
+          profiles = Array(resolved.meta&.profile).map(&:to_s)
+          allowed  = Array(discriminator[:values]).map(&:to_s)
+
+          allowed.any? { |p| profiles.any? { |rp| rp.start_with?(p) } }
         end
       end
     end
@@ -224,7 +255,7 @@ module CancerRegistryReportingTestKit
 
     def get_slice_by_codesystem(element, discriminator)
       find_a_value_at(element, '') do |coding|
-        discriminator[:values].any? { |value| coding.system.include? value[:system] }
+        Array(discriminator[:values]).any? { |value| coding.system.to_s.include?(value[:system].to_s) }
       end
     end
 
@@ -258,6 +289,34 @@ module CancerRegistryReportingTestKit
           end
         end
       end
+    end
+
+    def resolve_reference_from_scratch(reference)
+      return nil if reference.blank?
+
+      parts = reference.to_s.split('/')
+      return nil if parts.length < 2
+
+      resource_type = parts[-2]
+      resource_id   = parts[-1]
+
+      direct_match = Array.wrap(all_scratch_resources).find do |res|
+        res&.resourceType.to_s == resource_type && res&.id.to_s == resource_id
+      end
+
+      return direct_match if direct_match
+
+      Array.wrap(all_scratch_resources).each do |res|
+        next unless res&.resourceType.to_s == 'Bundle'
+
+        bundle_match = Array.wrap(res.entry).map(&:resource).find do |entry_resource|
+          entry_resource&.resourceType.to_s == resource_type && entry_resource&.id.to_s == resource_id
+        end
+
+        return bundle_match if bundle_match
+      end
+
+      nil
     end
   end
 end

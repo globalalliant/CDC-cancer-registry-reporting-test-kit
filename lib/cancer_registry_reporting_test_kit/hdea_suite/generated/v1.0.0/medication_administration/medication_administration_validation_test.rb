@@ -7,12 +7,12 @@ module CancerRegistryReportingTestKit
     class MedicationAdministrationValidationTest < Inferno::Test
       include CancerRegistryReportingTestKit::ValidationTest
 
-      id :ccrr_v100_medication_administration_validation_test
+      id :ccrr_v200_medication_administration_validation_test
       title 'Cancer-Related Medication Administration profile conformance'
       description %(
         This test verifies that MedicationAdministration instances
         found in the Medications and Medications Administered sections of the provided reports conform to the
-        [Cancer-Related Medication Administration profile](http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-related-medication-administration|3.0.0).
+        [Cancer-Related Medication Administration profile](http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-related-medication-administration|4.0.0).
       )
       
 
@@ -27,7 +27,7 @@ module CancerRegistryReportingTestKit
       run do
         perform_validation_test(scratch_resources[:all] || [],
                                 'http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-related-medication-administration',
-                                '3.0.0',
+                                '4.0.0',
                                 skip_if_empty: true)
       end
     end

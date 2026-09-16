@@ -7,12 +7,12 @@ module CancerRegistryReportingTestKit
     class DiagnosticReportLabValidationTest < Inferno::Test
       include CancerRegistryReportingTestKit::ValidationTest
 
-      id :ccrr_v100_diagnostic_report_lab_validation_test
+      id :ccrr_v200_diagnostic_report_lab_validation_test
       title 'US Core DiagnosticReport Profile for Laboratory Results Reporting profile conformance'
       description %(
         This test verifies that DiagnosticReport instances
         found in the Results sections of the provided reports conform to the
-        [US Core DiagnosticReport Profile for Laboratory Results Reporting profile](http://hl7.org/fhir/us/core/StructureDefinition/us-core-diagnosticreport-lab|5.0.1).
+        [US Core DiagnosticReport Profile for Laboratory Results Reporting profile](http://hl7.org/fhir/us/core/StructureDefinition/us-core-diagnosticreport-lab|6.1.0).
       )
       
 
@@ -27,7 +27,7 @@ module CancerRegistryReportingTestKit
       run do
         perform_validation_test(scratch_resources[:all] || [],
                                 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-diagnosticreport-lab',
-                                '5.0.1',
+                                '6.1.0',
                                 skip_if_empty: true)
       end
     end

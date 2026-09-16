@@ -7,12 +7,12 @@ module CancerRegistryReportingTestKit
     class PractitionerRoleValidationTest < Inferno::Test
       include CancerRegistryReportingTestKit::ValidationTest
 
-      id :ccrr_v100_practitioner_role_validation_test
+      id :ccrr_v200_practitioner_role_validation_test
       title 'US Core PractitionerRole profile conformance'
       description %(
         This test verifies that PractitionerRole instances
         referenced in the `author` elements of the provided reports conform to the
-        [US Core PractitionerRole profile](http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitionerrole|5.0.1).
+        [US Core PractitionerRole profile](http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitionerrole|6.1.0).
       )
       
 
@@ -27,7 +27,7 @@ module CancerRegistryReportingTestKit
       run do
         perform_validation_test(scratch_resources[:all] || [],
                                 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitionerrole',
-                                '5.0.1',
+                                '6.1.0',
                                 skip_if_empty: true)
       end
     end

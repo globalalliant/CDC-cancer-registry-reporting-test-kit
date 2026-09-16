@@ -7,12 +7,12 @@ module CancerRegistryReportingTestKit
     class ConditionValidationTest < Inferno::Test
       include CancerRegistryReportingTestKit::ValidationTest
 
-      id :ccrr_v100_condition_validation_test
+      id :ccrr_v200_condition_validation_test
       title 'US Core Condition profile conformance'
       description %(
         This test verifies that Condition instances
         found in the Problems sections of the provided reports conform to the
-        [US Core Condition profile](http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition|3.1.1).
+        [US Core Condition profile](http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition|6.1.0).
       )
       
 
@@ -26,8 +26,8 @@ module CancerRegistryReportingTestKit
 
       run do
         perform_validation_test(scratch_resources[:all] || [],
-                                'http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition',
-                                '3.1.1',
+                                'http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition-problems-health-concerns',
+                                '6.1.0',
                                 skip_if_empty: true)
       end
     end
